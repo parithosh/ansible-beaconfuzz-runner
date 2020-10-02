@@ -1,1 +1,3 @@
 FUZZING_HOME: /opt/fuzzing
+CARGO_NIMBUS_DIR: /opt/fuzzing/nim-beacon-chain
+CARGO_PRYSM_DIR: /opt/fuzzing/beacon-fuzz/beaconfuzz_v2/libs

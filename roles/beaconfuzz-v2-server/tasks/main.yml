@@ -1,2 +1,51 @@
 ---
 # tasks file for beaconfuzz-v2
+- name: Install cargo using rustup
+  become: yes
+  shell: curl https://sh.rustup.rs -sSf  | sh -s -- -y
+
+- name: Git checkout beacon-fuzz
+  git:
+    repo: 'https://github.com/sigp/beacon-fuzz.git'
+    dest: "{{ FUZZING_HOME }}/beacon-fuzz"
+
+- name: Git checkout lighthouse
+  git:
+    repo: 'https://github.com/sigp/lighthouse.git'
+    dest: "{{ FUZZING_HOME }}/lighthouse"
+
+- name: Git checkout nimbus
+  git:
+    repo: 'https://github.com/status-im/nim-beacon-chain.git'
+    dest: "{{ FUZZING_HOME }}/nim-beacon-chain"
+    version: devel
+
+- name: make nimbus deps
+  become: yes
+  shell: cd {{ FUZZING_HOME }}/nim-beacon-chain && NIMFLAGS="-d:disableLTO" make libnfuzz.a libnfuzz.so
+
+- name: Use cargo to install cargo-fuzz
+  become: yes
+  shell: . ~/.cargo/env && cargo +nightly install cargo-fuzz
+
+- name: Use cargo to install hong-fuzz
+  become: yes
+  shell: . ~/.cargo/env && cargo +nightly install honggfuzz
+
+- name: Clean old artefacts if present
+  become: yes
+  shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make clean
+
+- name: Make beaconfuzz_v2
+  become: yes
+  shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make
+  environment:
+    CARGO_NIMBUS_DIR: "{{ CARGO_NIMBUS_DIR }}"
+    CARGO_PRYSM_DIR: "{{ CARGO_PRYSM_DIR }}"
+
+- name: Make beaconfuzz_v2
+  become: yes
+  shell: screen -d -m sh -c ". ~/.cargo/env; cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2; make {{ fuzzing_target }}; sleep 30"
+  environment:
+    CARGO_NIMBUS_DIR: "{{ CARGO_NIMBUS_DIR }}"
+    CARGO_PRYSM_DIR: "{{ CARGO_PRYSM_DIR }}"

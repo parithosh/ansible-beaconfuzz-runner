@@ -1,6 +1,6 @@
 - hosts: "{{ playbook_hosts | default('servers') }}"
   become: yes
   tasks:
-    - name: clear make command
+    - name: stop all fuzzing runs - and make
       become: yes
       shell: screen -d -m bash -c "sleep 1; pkill make;"
