@@ -1,2 +1,16 @@
 ---
 # tasks file for fuzzing-server
+
+- name: Git checkout
+  git:
+    repo: 'https://github.com/sigp/beacon-fuzz.git'
+    dest: "{{ FUZZING_HOME }}"
+
+#- name: Run 'install' target as root
+#  become: yes
+#  make:
+#    chdir: "{{ FUZZING_HOME }}/eth2fuzz"
+#    target: lighthouse
+- name: make and run fuzzer on screen
+  become: yes
+  shell: screen -d -m bash -c "cd {{ FUZZING_HOME }}/eth2fuzz; make {{ fuzzing_target }}; sleep 30"

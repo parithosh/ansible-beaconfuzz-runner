@@ -12,6 +12,7 @@
       - python3-pip
       - python3-setuptools
       - libpcre3-dev
+      - screen
 
 - name: Add Docker GPG apt Key
   apt_key:
