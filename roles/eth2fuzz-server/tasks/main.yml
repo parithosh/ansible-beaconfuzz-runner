@@ -8,5 +8,5 @@
 
 - name: make and run fuzzer on screen
   become: yes
-  shell: screen -d -c "cd {{ FUZZING_HOME }}/beacon-fuzz/eth2fuzz; make {{ fuzzing_target }}; sleep 1"
+  shell: screen -d -m sh -c "cd {{ FUZZING_HOME }}/beacon-fuzz/eth2fuzz; make {{ fuzzing_target }}; sleep 5"
 
