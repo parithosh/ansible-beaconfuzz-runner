@@ -2,7 +2,13 @@
   vars_files:
     - variables/folder-location.yaml
   tasks:
-    - name: ansible create directory example
+    - name: apt install rsync
+      become: true
+      apt:
+        update_cache: yes
+        pkg:
+          - rsync
+    - name: ansible create directory
       delegate_to: localhost
       file:
         path: ../fuzzing-artifacts/{{ inventory_hostname }}
@@ -12,10 +18,10 @@
       ansible.posix.synchronize:
         mode: pull
         src: "{{ ETH2FUZZ_ARTIFACT_LOCATION }}"
-        dest: ../fuzzing-artifacts/eth2fuzz/{{ inventory_hostname }}
+        dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz
     - name: Pull the beaconfuzz_v2 fuzzing artifacts to the local system using rsync
       when: tool == 'beaconfuzz_v2'
       ansible.posix.synchronize:
         mode: pull
         src: "{{ BEACONFUZZ_V2_ARTIFACT_LOCATION }}"
-        dest: ../fuzzing-artifacts/beaconfuzz_v2/{{ inventory_hostname }}
+        dest: ../fuzzing-artifacts/{{ inventory_hostname }}/beaconfuzz_v2

@@ -3,6 +3,7 @@
 
 - name: apt install dependencies
   apt:
+    update_cache: yes
     pkg:
       - apt-transport-https
       - ca-certificates
@@ -30,8 +31,3 @@
 - name: Install Docker Module for Python
   pip:
     name: docker
-
-- name: Create fuzzing folder location
-  file:
-    path: "{{ FUZZING_HOME }}"
-    state: directory

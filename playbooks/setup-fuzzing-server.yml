@@ -1,9 +1,9 @@
 - hosts: "{{ playbook_hosts | default('servers') }}"
-  become: yes
   vars_files:
     - variables/folder-location.yaml
   roles:
     - role: basic-dependencies
+      become: true
     - role: eth2fuzz-server
       when: tool == 'eth2fuzz'
     - role: beaconfuzz-v2-server
