@@ -49,4 +49,5 @@ artefacts might be wrong and needs some attention to change it. Changes can be d
 ## Contributors welcome!
 
 If you like my work, feel free to buy me a beer.
+
 Ethereum address: 0x2628562A4fd5762D52CF43DE21bB925174C33085 
