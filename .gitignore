@@ -1,4 +1,4 @@
 .idea/*
-#inventory.ini
+inventory.ini
 .DS_Store
 fuzzing-artifacts
