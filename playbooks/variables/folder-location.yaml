@@ -1,5 +1,9 @@
 FUZZING_HOME: /tmp/fuzzing
 CARGO_NIMBUS_DIR: /tmp/fuzzing/nim-beacon-chain
 CARGO_PRYSM_DIR: /tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/libs
-ETH2FUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/fuzz/artifacts
+ETH2FUZZ_HFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/hfuzz/hfuzz_workspace
+ETH2FUZZ_LIBFUZZER_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/libfuzzer/fuzz/artifact
+ETH2FUZZ_GOFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/gofuzz/
+ETH2FUZZ_NIMLIBFUZZER_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/nimlibfuzzer/
+ETH2FUZZ_JAVAFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/javafuzz/
 BEACONFUZZ_V2_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/fuzz/artifacts
