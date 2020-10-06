@@ -45,6 +45,7 @@ artefacts might be wrong and needs some attention to change it. Changes can be d
 - Test the `fetch-all-artefacts.yml` playbook to check if the locations of the fuzzing artifacts are correct
 - Create a user on the remote machine purely for fuzzing
 - Create a playbook that randomly runs a fuzzer without any configuration being specified 
+- Create a playbook for updating an existing fuzzer
 
 ## Contributors welcome!
 
