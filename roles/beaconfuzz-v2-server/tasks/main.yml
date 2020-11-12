@@ -25,25 +25,29 @@
   git:
     repo: 'https://github.com/sigp/beacon-fuzz.git'
     dest: "{{ FUZZING_HOME }}/beacon-fuzz"
+  ignore_errors: yes
 
 - name: Git checkout lighthouse
   git:
     repo: 'https://github.com/sigp/lighthouse.git'
     dest: "{{ FUZZING_HOME }}/lighthouse"
+  ignore_errors: yes
 
 - name: Git checkout teku
   git:
     repo: 'https://github.com/PegaSysEng/teku.git'
     dest: "{{ FUZZING_HOME }}/teku"
+  ignore_errors: yes
 
 - name: Git checkout nimbus
   git:
-    repo: 'git clone https://github.com/status-im/nimbus-eth2'
+    repo: 'https://github.com/status-im/nimbus-eth2'
     dest: "{{ FUZZING_HOME }}/nimbus-eth2"
     version: devel
+  ignore_errors: yes
 
 - name: make nimbus deps
-  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout devel && NIMFLAGS="-d:disableLTO" make libnfuzz.a
+  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout master && NIMFLAGS="-d:disableLTO" make libnfuzz.a
 
 - name: make teku deps
   shell: cd {{ FUZZING_HOME }}/teku && git checkout 0.12.9 && ./gradlew installDist fuzz:build -x test --stacktrace
@@ -51,21 +55,31 @@
 - name: Clean old artefacts if present
   shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make clean
 
+- name: Remove old env file if it exists
+  file:
+    path: /tmp/fuzzing/env
+    state: absent
+  ignore_errors: yes
+
+- name: add java home value to file
+  shell: echo "export JAVA_HOME=\"$(dirname $(dirname $(readlink -f $(command -v java))))\"" >> /tmp/fuzzing/env
+
+- name: add java home value to file
+  shell: echo "export LD_LIBRARY_PATH=\"$(dirname $(dirname $(readlink -f $(command -v java))))/lib/server\"" >> /tmp/fuzzing/env
+
 - name: Make beaconfuzz_v2
   become: true
-  shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make
+  shell: . ~/.cargo/env && . /tmp/fuzzing/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make
   environment:
     CARGO_NIMBUS_DIR: "{{ CARGO_NIMBUS_DIR }}"
     CARGO_PRYSM_DIR: "{{ CARGO_PRYSM_DIR }}"
-    JAVA_HOME: "$(dirname $(dirname $(readlink -f $(command -v java))))"
     BFUZZ_TEKU_DIR: "{{ BFUZZ_TEKU_DIR }}"
-
 
 - name: start fuzzer
   become: true
-  shell: screen -d -m sh -c ". ~/.cargo/env; cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2; make {{ fuzzing_target }}; sleep 30"
+  shell: screen -d -m sh -c ". ~/.cargo/env; . /tmp/fuzzing/env; cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2; make {{ fuzzing_target }}; sleep 30"
   environment:
     CARGO_NIMBUS_DIR: "{{ CARGO_NIMBUS_DIR }}"
     CARGO_PRYSM_DIR: "{{ CARGO_PRYSM_DIR }}"
-    LD_LIBRARY_PATH: "$JAVA_HOME/lib/server"
     BFUZZ_TEKU_DIR: "{{ BFUZZ_TEKU_DIR }}"
+    JAVA_TOOL_OPTIONS: "-Xmx6g -Xcheck:jni"
