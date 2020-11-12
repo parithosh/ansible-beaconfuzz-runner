@@ -16,6 +16,8 @@
       - screen
       - binutils-dev
       - libunwind-dev
+      - openjdk-11-jdk
+      - clang
 
 
 - name: Add Docker GPG apt Key
