@@ -6,5 +6,6 @@
       become: true
     - role: eth2fuzz-server
       when: tool == 'eth2fuzz'
+      become: true
     - role: beaconfuzz-v2-server
       when: tool == 'beaconfuzz_v2'

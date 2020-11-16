@@ -47,13 +47,15 @@
   ignore_errors: yes
 
 - name: make nimbus deps
-  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout master && NIMFLAGS="-d:disableLTO" make libnfuzz.a
+  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout devel && NIMFLAGS="-d:disableLTO" make libnfuzz.a
 
 - name: make teku deps
   shell: cd {{ FUZZING_HOME }}/teku && git checkout 0.12.9 && ./gradlew installDist fuzz:build -x test --stacktrace
 
 - name: Clean old artefacts if present
   shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make clean
+  ignore_errors: yes
+  become: true
 
 - name: Remove old env file if it exists
   file:
@@ -63,9 +65,11 @@
 
 - name: add java home value to file
   shell: echo "export JAVA_HOME=\"$(dirname $(dirname $(readlink -f $(command -v java))))\"" >> /tmp/fuzzing/env
+  become: true
 
 - name: add java home value to file
   shell: echo "export LD_LIBRARY_PATH=\"$(dirname $(dirname $(readlink -f $(command -v java))))/lib/server\"" >> /tmp/fuzzing/env
+  become: true
 
 - name: Make beaconfuzz_v2
   become: true
