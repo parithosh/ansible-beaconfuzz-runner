@@ -21,10 +21,9 @@ for filename in "$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER"/*.fuzz; do
   echo "testing $filename"
   FALSE_COUNTER=0
 
-  FALSE_COUNTER=$( docker run -v "$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER":"$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER"  beaconfuzz_v2 ./beaconfuzz_v2 debug beacon.ssz "$filename" "$CONTAINER_TYPE" | grep -c "false")
+  # Runs the beaconfuzz debug tool inside a docker container
+  FALSE_COUNTER=$( docker run -v "$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER":"$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER"  parithoshj/beaconfuzz_v2:latest ./beaconfuzz_v2 debug beacon.ssz "$filename" "$CONTAINER_TYPE" | grep -c "false")
 
-#  FALSE_COUNTER=$(./beaconfuzz_v2 debug beacon.ssz "$filename" "$CONTAINER_TYPE" | grep -c "false")
-  #./beaconfuzz_v2 debug beacon.ssz "$filename" "$CONTAINER_TYPE"
   if [ "$(( FALSE_COUNTER % 2))" -ne 0 ]; then
         echo "Only 1 false detected!"
         NUMBER_OF_ACTUAL_CRASHES=$((NUMBER_OF_ACTUAL_CRASHES + 1))
