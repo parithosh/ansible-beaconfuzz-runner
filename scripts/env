@@ -1,0 +1,5 @@
+export CARGO_NIMBUS_DIR="/tmp/fuzzing/nimbus-eth2"
+export CARGO_PRYSM_DIR="/tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/libs"
+export BFUZZ_TEKU_DIR="/tmp/fuzzing/teku"
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export LD_LIBRARY_PATH="/usr/lib/jvm/java-11-openjdk-amd64/lib/server"

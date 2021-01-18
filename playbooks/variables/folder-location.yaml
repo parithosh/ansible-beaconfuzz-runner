@@ -1,7 +1,7 @@
 FUZZING_HOME: /tmp/fuzzing
 CARGO_NIMBUS_DIR: /tmp/fuzzing/nimbus-eth2
 CARGO_PRYSM_DIR: /tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/libs
-BFUZZ_TEKU_DIR: /tmp/fizzing/teku
+BFUZZ_TEKU_DIR: /tmp/fuzzing/teku
 ETH2FUZZ_HFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/hfuzz/hfuzz_workspace
 ETH2FUZZ_LIBFUZZER_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/libfuzzer/fuzz/artifact
 ETH2FUZZ_GOFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/gofuzz/
