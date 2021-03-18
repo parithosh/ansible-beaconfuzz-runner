@@ -1,4 +1,4 @@
-- hosts: "{{ playbook_hosts | default('servers') }}"
+- hosts: all
   vars_files:
     - variables/folder-location.yaml
   roles:

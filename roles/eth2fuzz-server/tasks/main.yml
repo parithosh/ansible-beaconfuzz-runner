@@ -5,6 +5,11 @@
     path: "{{ FUZZING_HOME }}"
     state: directory
 
+- name: Remove "golang-docker-credential-helpers" package which causes make errors for some docker edge case inside VMs
+  apt:
+    name: golang-docker-credential-helpers
+    state: absent
+
 - name: Git checkout
   git:
     repo: 'https://github.com/sigp/beacon-fuzz.git'
@@ -12,4 +17,4 @@
 
 - name: make and run fuzzer on screen
   become: true
-  shell: screen -d -m sh -c "cd {{ FUZZING_HOME }}/beacon-fuzz/eth2fuzz; make {{ fuzzing_target }}; sleep 30"
+  shell: screen -d -m sh -c "cd {{ FUZZING_HOME }}/beacon-fuzz/eth2fuzz; make {{ fuzzing_target }}; sleep 120"

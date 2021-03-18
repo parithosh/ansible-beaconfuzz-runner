@@ -1,4 +1,4 @@
-- hosts: "{{ playbook_hosts | default('servers') }}"
+- hosts: all
   vars_files:
     - variables/folder-location.yaml
   tasks:
@@ -17,37 +17,50 @@
       - name: Pull the eth2fuzz fuzzing artifacts to the local system using rsync
         when: tool == 'eth2fuzz'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ ETH2FUZZ_HFUZZ_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz/hfuzz
       - name: Pull the eth2fuzz fuzzing artifacts to the local system using rsync
         when: tool == 'eth2fuzz'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ ETH2FUZZ_LIBFUZZER_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz/libfuzzer
       - name: Pull the eth2fuzz fuzzing artifacts to the local system using rsync
         when: tool == 'eth2fuzz'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ ETH2FUZZ_GOFUZZ_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz/gofuzz
       - name: Pull the eth2fuzz fuzzing artifacts to the local system using rsync
         when: tool == 'eth2fuzz'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ ETH2FUZZ_NIMLIBFUZZER_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz/nimlibfuzzer
       - name: Pull the eth2fuzz fuzzing artifacts to the local system using rsync
         when: tool == 'eth2fuzz'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ ETH2FUZZ_JAVAFUZZ_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/eth2fuzz/javafuzz
       - name: Pull the beaconfuzz_v2 fuzzing artifacts to the local system using rsync
         when: tool == 'beaconfuzz_v2'
         ansible.posix.synchronize:
+          use_ssh_args: true
           mode: pull
           src: "{{ BEACONFUZZ_V2_ARTIFACT_LOCATION }}"
+          dest: ../fuzzing-artifacts/{{ inventory_hostname }}/beaconfuzz_v2
+      - name: Pull the beaconfuzz_v2 struct fuzzing artifacts to the local system using rsync
+        when: tool == 'beaconfuzz_v2'
+        ansible.posix.synchronize:
+          use_ssh_args: true
+          mode: pull
+          src: "{{ BEACONFUZZ_V2_STRUCT_ARTIFACT_LOCATION }}"
           dest: ../fuzzing-artifacts/{{ inventory_hostname }}/beaconfuzz_v2
       ignore_errors: yes

@@ -8,3 +8,4 @@ ETH2FUZZ_GOFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/g
 ETH2FUZZ_NIMLIBFUZZER_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/nimlibfuzzer/
 ETH2FUZZ_JAVAFUZZ_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/eth2fuzz/workspace/javafuzz/
 BEACONFUZZ_V2_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/hfuzz_workspace
+BEACONFUZZ_V2_STRUCT_ARTIFACT_LOCATION: /tmp/fuzzing/beacon-fuzz/beaconfuzz_v2/fuzz/artifacts/

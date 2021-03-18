@@ -25,6 +25,8 @@
   git:
     repo: 'https://github.com/sigp/beacon-fuzz.git'
     dest: "{{ FUZZING_HOME }}/beacon-fuzz"
+    version: 49e484559727e1ae651b0417234ea672f0adf6fd
+    refspec: '+refs/pull/*:refs/heads/*'
   ignore_errors: yes
 
 - name: Git checkout lighthouse
@@ -33,24 +35,24 @@
     dest: "{{ FUZZING_HOME }}/lighthouse"
   ignore_errors: yes
 
-- name: Git checkout teku
-  git:
-    repo: 'https://github.com/PegaSysEng/teku.git'
-    dest: "{{ FUZZING_HOME }}/teku"
-  ignore_errors: yes
+#- name: Git checkout teku
+#  git:
+#    repo: 'https://github.com/PegaSysEng/teku.git'
+#    dest: "{{ FUZZING_HOME }}/teku"
+#  ignore_errors: yes
 
 - name: Git checkout nimbus
   git:
     repo: 'https://github.com/status-im/nimbus-eth2'
     dest: "{{ FUZZING_HOME }}/nimbus-eth2"
-    version: devel
+    version: stable
   ignore_errors: yes
 
 - name: make nimbus deps
-  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout devel && NIMFLAGS="-d:disableLTO" make libnfuzz.a
+  shell: cd {{ FUZZING_HOME }}/nimbus-eth2 && git checkout stable && NIMFLAGS="-d:disableLTO" make libnfuzz.a
 
-- name: make teku deps
-  shell: cd {{ FUZZING_HOME }}/teku && git checkout 0.12.9 && ./gradlew installDist fuzz:build -x test --stacktrace
+#- name: make teku deps
+#  shell: cd {{ FUZZING_HOME }}/teku && git checkout 0.12.9 && ./gradlew installDist fuzz:build -x test --stacktrace
 
 - name: Clean old artefacts if present
   shell: . ~/.cargo/env && cd {{ FUZZING_HOME }}/beacon-fuzz/beaconfuzz_v2 && make clean

@@ -10,14 +10,14 @@ read -p "input: " CONTAINER_TYPE
 echo "container type: $CONTAINER_TYPE"
 
 #BEACONFUZZ_V2_BASE="/tmp/fuzzing/beacon-fuzz/beaconfuzz_v2"
-BEACONFUZZ_V2_BASE="/Users/parithosh/dev/ansible/ansible-beaconfuzz-runner/fuzzing-artifacts"
+BEACONFUZZ_V2_BASE="/Users/parithosh/dev/ansible/ansible-beaconfuzz-runner"
 
 echo "Number of crash files to test: $(ls -l $BEACONFUZZ_V2_BASE/$ARTIFACT_FOLDER | grep -v ^l | wc -l) "
 NUMBER_OF_FALSE_POSITIVES=0
 NUMBER_OF_ACTUAL_CRASHES=0
 FAILURE_ARRAY=("")
 
-for filename in "$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER"/*.fuzz; do
+for filename in "$BEACONFUZZ_V2_BASE"/"$ARTIFACT_FOLDER"/*; do
   echo "testing $filename"
   FALSE_COUNTER=0
 

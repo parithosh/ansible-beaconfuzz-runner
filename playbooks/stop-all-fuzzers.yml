@@ -1,4 +1,4 @@
-- hosts: "{{ playbook_hosts | default('servers') }}"
+- hosts: all
   become: yes
   tasks:
     - name: stop all fuzzing runs - and make
